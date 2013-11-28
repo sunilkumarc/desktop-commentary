@@ -1,5 +1,9 @@
 #! /bin/bash
 
+sudo apt-get install python2.7
+sudo easy_install pip
+sudo pip install BeautifulSoup4
+sudo pip install lxml
 sudo apt-get install python-qt4
 sudo chmod +x remove.sh commentary.py script.sh error.sh stop.sh
 sudo mkdir /opt/desktop-commentary
