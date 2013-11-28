@@ -29,7 +29,7 @@ To uninstall the application type
 
 ### How to use
 Go to [espncricinfo](http://www.espncricinfo.com) website. And copy paste 
-the url of the particular match into the textbox given in the interface.
+the url of an ongoing match into the textbox given in the interface.
 Click the start button. Thats it!
 
 You can stop the commentary by typing
