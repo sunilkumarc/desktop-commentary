@@ -28,7 +28,7 @@ To uninstall the application type
 `commentary-uninstall`
 
 ### How to use
-Go to [espncricinfo](http://http://www.espncricinfo.com) website. And copy paste 
+Go to [espncricinfo](http://www.espncricinfo.com) website. And copy paste 
 the url of the particular match into the textbox given in the interface.
 Click the start button. Thats it!
 
