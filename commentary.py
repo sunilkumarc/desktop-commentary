@@ -70,7 +70,7 @@ class Score(QtGui.QMainWindow):
 			self.commentary = res.split("<p class=\"commsText\">")[1].split("</p>")[0].split('\n')[1]
 
 		os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
-		threading.Timer(10, self.get_commentary).start()
+		threading.Timer(30, self.get_commentary).start()
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
