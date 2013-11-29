@@ -1,5 +1,6 @@
 #! /bin/bash
 
+
 sudo easy_install pip
 sudo pip install BeautifulSoup4
 sudo pip install lxml
