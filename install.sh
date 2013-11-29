@@ -1,6 +1,5 @@
 #! /bin/bash
 
-sudo apt-get install python2.7
 sudo easy_install pip
 sudo pip install BeautifulSoup4
 sudo pip install lxml
