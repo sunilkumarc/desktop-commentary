@@ -32,7 +32,7 @@ Go to [espncricinfo](http://www.espncricinfo.com) website. And copy paste
 the url of an ongoing match into the textbox given in the interface.
 Click the start button. Thats it!
 
-You can stop the commentary by typing
+You can stop the commentary anytime by typing
 `stopcommentary`
 in your terminal
 
