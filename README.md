@@ -19,11 +19,14 @@ Run the **install.sh** script.
 
 When you run the installation script all the necessary packages will be 
 downloaded and installed.
+
 Now you can start the application by typing
 `commentary`
 in your terminal
+
 To uninstall the application type
 `commentary-uninstall`
+in your terminal
 
 ### How to use
 Go to [espncricinfo](http://www.espncricinfo.com) website. And copy paste 
@@ -34,4 +37,4 @@ You can stop the commentary anytime by typing
 `stopcommentary`
 in your terminal
 
-The application contains small bugs. These bugs will be fixed soon :)
+The application still contains small bugs. These bugs will be fixed soon :)
