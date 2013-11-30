@@ -41,7 +41,7 @@ class Score(QtGui.QMainWindow):
 			tab = soup.find("table", "commsTable")
 			l = tab.findAll("p")
 		except:
-			os.system("/opt/desktop-commentary/./error.sh" + " " + "\"" +"Unable to find commentary for the entered match" + "\"")
+			os.system("/opt/desktop-commentary/./error.sh" + " " + "\"" +"Unable to find commentary for the entered match." + "\"")
 			sys.exit()
 
 		res = str(l[0])
@@ -67,7 +67,9 @@ class Score(QtGui.QMainWindow):
 					str2 += string
 				self.commentary = temp2 + " - " + str2
 		except:
-			self.commentary = res.split("<p class=\"commsText\">")[1].split("</p>")[0].split('\n')[1]
+			# self.commentary = res.split("<p class=\"commsText\">")[1].split("</p>")[0].split('\n')[1]
+			self.commentary = ""
+			pass
 
 		source = urlopen(self.link).read()
 		page = source.split("<div class=\"topFrameTitle\">", 2)

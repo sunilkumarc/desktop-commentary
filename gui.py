@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'score.ui'
 #
-# Created: Thu Nov 28 12:08:13 2013
+# Created: Sat Nov 30 19:30:52 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,15 +26,15 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(667, 101)
+        Form.resize(667, 130)
         Form.setMouseTracking(True)
         Form.setAcceptDrops(True)
         Form.setAutoFillBackground(True)
         self.start = QtGui.QPushButton(Form)
-        self.start.setGeometry(QtCore.QRect(240, 60, 161, 31))
+        self.start.setGeometry(QtCore.QRect(240, 90, 161, 31))
         self.start.setObjectName(_fromUtf8("start"))
         self.scoreurl = QtGui.QTextEdit(Form)
-        self.scoreurl.setGeometry(QtCore.QRect(20, 10, 631, 41))
+        self.scoreurl.setGeometry(QtCore.QRect(20, 10, 631, 71))
         self.scoreurl.setObjectName(_fromUtf8("scoreurl"))
 
         self.retranslateUi(Form)
