@@ -69,8 +69,19 @@ class Score(QtGui.QMainWindow):
 		except:
 			self.commentary = res.split("<p class=\"commsText\">")[1].split("</p>")[0].split('\n')[1]
 
+		source = urlopen(self.link).read()
+		page = source.split("<div class=\"topFrameTitle\">", 2)
+		page2 = page[1].split("</div>")
+		page3 = page2[0].split("data-text=\"")
+		page4 = page3[1].split("\">Tweet")
+		score = page4[0]
+		split_scores = score.split(" v ")
+		first_team = split_scores[0]
+		second_team = split_scores[1]
+
+		self.commentary = first_team + "\n" + second_team + "\n-------------------------------------------------------------" +"\n" + self.commentary
 		os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
-		threading.Timer(25, self.get_commentary).start()
+		threading.Timer(30, self.get_commentary).start()
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
