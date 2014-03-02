@@ -1,3 +1,3 @@
 #! /bin/bash
 
-sudo pkill -9 python2
+sudo pkill -9 python
