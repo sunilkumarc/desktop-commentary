@@ -1,3 +1,3 @@
-#! /bin/bash
+#!/bin/bash
 
-sudo pkill -9 commentary
+pkill -9 commentary
