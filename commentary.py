@@ -51,6 +51,7 @@ class Score(QtGui.QMainWindow):
 		        comm = c[0] + c1[0] + c1[1]
 		    except:
 		        pass
+                    comm = str(over) + ' - ' + str(comm)
 		except:
 		    comm = str(l)
 		    try:
