@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/python
 
 from PyQt4 import QtGui, QtCore
 import gui
@@ -6,7 +6,7 @@ import sys
 import os
 import threading
 from bs4 import BeautifulSoup
-from urllib2 import urlopen
+from urllib3 import PoolManager
 import threading
 
 class Score(QtGui.QMainWindow):
@@ -33,45 +33,47 @@ class Score(QtGui.QMainWindow):
 		self.get_commentary()
 
 	def get_commentary(self):
-		l = None
+		m = PoolManager(10)
+		html = m.request('GET', 'http://www.espncricinfo.com/netstorage/710301.html')
+		soup = BeautifulSoup(html.data, "lxml")
+		tab = soup.find("table", "commsTable")
+		l = tab.findAll("p")
+		comm = ""
 		try:
-			link = "http://www.espncricinfo.com/netstorage/" + self.match_no
-			html = urlopen(link).read()
-			soup = BeautifulSoup(html, "lxml")
-			tab = soup.find("table", "commsTable")
-			l = tab.findAll("p")
+		    
+		    over = str(l[0]).split("<p class=\"commsText\">")[1].split("</p>")[0]
+		    over = float(over)
+		    comm = str(l[1]).split("<p class=\"commsText\">")[1].split("</p>")[0]
+		    #comm = l.split("<p class=\"commsText\">")[1].split("</p>")[0]
+		    try:
+		        c = comm.split("<span class=\"commsImportant\">")
+		        c1 = c[1].split("</span>")
+		        comm = c[0] + c1[0] + c1[1]
+		    except:
+		        pass
 		except:
-			os.system("/opt/desktop-commentary/./error.sh" + " " + "\"" +"Unable to find commentary for the entered match." + "\"")
-			sys.exit()
+		    comm = str(l)
+		    try:
+		        comm = comm.split("\">")[1].split("</p>")[0]
+		    except:
+		        temp = comm.split("\"")
+		        comm = temp[0] + temp[1]
 
-		res = str(l[0])
-		try:
-			num = res
-			num = float(num.split("<p class=\"commsText\">")[1].split("</p>")[0])
-			str2 = str(l[1])
-			str2 = str2.split("<p class=\"commsText\">")[1].split("</p>")[0]
-			temp = str2.split("<span class=\"commsImportant\">")
-			str3 = None
-			try:
-				str3 = temp[1]
-			except:
-				pass
-			temp2 = res.split("<p class=\"commsText\">")[1].split("</p>")[0]
-			if str3:
-				str3 = str3.split("</span>")
-				self.commentary = temp2 + " - " + temp[0].split("\n")[0] + str3[0] + str3[1]
-			else:
-				str4 = str2.split("\n")
-				str2 = ""
-				for string in str4:
-					str2 += string
-				self.commentary = temp2 + " - " + str2
-		except:
-			# self.commentary = res.split("<p class=\"commsText\">")[1].split("</p>")[0].split('\n')[1]
-			self.commentary = ""
-			pass
+		string = comm.split('\n')
+		comm = ""
+		for line in string:
+		    comm += line
 
-		source = urlopen(self.link).read()
+		i = 1
+		line_len = 40
+		while i < len(comm):
+		    comm = comm[:(i*line_len)] + '\n' + comm[(i*line_len):]
+		    i += line_len
+
+		link = 'http://www.espncricinfo.com/ci/engine/match/710301.html'
+		m = PoolManager(10)
+		html = m.request('GET', link)
+		source = str(html.data)
 		page = source.split("<div class=\"topFrameTitle\">", 2)
 		page2 = page[1].split("</div>")
 		page3 = page2[0].split("data-text=\"")
@@ -80,8 +82,8 @@ class Score(QtGui.QMainWindow):
 		split_scores = score.split(" v ")
 		first_team = split_scores[0]
 		second_team = split_scores[1]
-
-		self.commentary = first_team + "\n" + second_team + "\n-------------------------------------------------------------" +"\n" + self.commentary
+		
+		self.commentary = first_team + "\n" + second_team + "\n-------------------------------" +"\n" + comm
 		os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
 		threading.Timer(30, self.get_commentary).start()
 
