@@ -65,10 +65,13 @@ class Score(QtGui.QMainWindow):
 		    comm += line
 
 		i = 1
-		line_len = 40
-		while i < len(comm):
+		one_line = 50
+		line_len = 50
+		length = len(comm)
+		while one_line < length:
 		    comm = comm[:(i*line_len)] + '\n' + comm[(i*line_len):]
-		    i += line_len
+		    i += 1
+		    one_line += line_len
 
 		link = 'http://www.espncricinfo.com/ci/engine/match/710301.html'
 		m = PoolManager(10)
@@ -82,7 +85,7 @@ class Score(QtGui.QMainWindow):
 		split_scores = score.split(" v ")
 		first_team = split_scores[0]
 		second_team = split_scores[1]
-		
+
 		self.commentary = first_team + "\n" + second_team + "\n-------------------------------" +"\n" + comm
 		os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
 		threading.Timer(30, self.get_commentary).start()

@@ -5,20 +5,21 @@ This is basically a desktop application to get commentary of ongoing matches
 on your desktop.
 
 ### Requirements
-* Python2.x (python2.7 in ubuntu)
-* PyQt4 (pyqt4-dev-tools in ubuntu)
-* BeautifulSoup
+* Python3.x
+* PyQt4
+* BeautifulSoup4
 * lxml
+* urllib3
 
 ### Installation 
 Clone the repo:  
 `git clone https://github.com/sunilkumarc/desktop-commentary`
 
-Run the **install.sh** script.  
-`./install.sh`
+Download all the necessary packages first.
 
-When you run the installation script all the necessary packages will be 
-downloaded and installed.
+Then run the **install.sh** script.  
+`./install.sh`
+to install the application.
 
 Now you can start the application by typing
 `commentary`
