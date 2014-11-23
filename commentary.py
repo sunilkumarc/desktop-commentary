@@ -8,6 +8,7 @@ import threading
 import urllib.request
 import threading
 import json
+import textwrap
 
 class Score(QtGui.QMainWindow):
 	link = ""
@@ -37,15 +38,20 @@ class Score(QtGui.QMainWindow):
 		page = urllib.request.urlopen(url).read().decode("utf-8")
 		page = json.loads(page)
 		each_ball = page["comms"][0]["ball"][0]
-		self.commentary = ""
-		self.commentary = "Ind(288/7, 48.4) Vs Sri(286/8, 50)" + '\n'
+
+		current_match = page["other_scores"]["international"][0]
+		team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["overs"]
+		self.commentary = current_match["team1_name"] + "(" + current_match["team1_desc"]+ " )" +  " Vs " + current_match["team2_name"] + "( " + str(team2_score) + " )" + "\n"
+
 		players = page["centre"]["batting"]
 		player1 = players[0]
 		player2 = players[1]
 
 		self.commentary += ''.join((player1["known_as"], " - ", player1["runs"],'(', player1["balls_faced"] ,')')) + "\n"
-		self.commentary += ''.join((player2["known_as"], " - ", player2["runs"],'(', player2["balls_faced"] ,')')) + "\n"
-		self.commentary += ''.join((each_ball["overs_actual"], " : ", each_ball['players'],',',each_ball['event'], ',', each_ball["text"]))
+		self.commentary += ''.join((player2["known_as"], " - ", player2["runs"],'(', player2["balls_faced"] ,')')) + "\n\n"
+		temp = ''.join((each_ball["overs_actual"], " : ", each_ball['players'],',',each_ball['event'], ',', each_ball["text"]))
+		temp = '\n'.join(textwrap.wrap(temp, 64))
+		self.commentary += temp
 
 		os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
 		threading.Timer(30, self.get_commentary).start()
