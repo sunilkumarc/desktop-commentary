@@ -40,7 +40,7 @@ class Score(QtGui.QMainWindow):
 		each_ball = page["comms"][0]["ball"][0]
 
 		current_match = page["other_scores"]["international"][0]
-		team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["overs"]
+		team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["wickets"] + ", " +page["live"]["innings"]["overs"]
 		self.commentary = current_match["team1_name"] + "(" + current_match["team1_desc"]+ " )" +  " Vs " + current_match["team2_name"] + "( " + str(team2_score) + " )" + "\n"
 
 		players = page["centre"]["batting"]
