@@ -34,7 +34,7 @@ class Score(QtGui.QMainWindow):
 		self.get_commentary()
 
 	def get_commentary(self):
-		url = "http://www.espncricinfo.com/netstorage/" + self.match_no +".json?xhr=1"
+		url = "http://www.espncricinfo.com/ci/engine/match/" + self.match_no + ".json"
 		page = urllib.request.urlopen(url).read().decode("utf-8")
 		page = json.loads(page)
 		each_ball = page["comms"][0]["ball"][0]
