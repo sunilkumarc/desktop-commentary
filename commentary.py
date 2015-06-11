@@ -34,14 +34,19 @@ class Score(QtGui.QMainWindow):
 		self.get_commentary()
 
 	def get_commentary(self):
+		# url = "http://www.espncricinfo.com/netstorage/" + self.match_no + ".json?xhr=1"
 		url = "http://www.espncricinfo.com/ci/engine/match/" + self.match_no + ".json"
 		page = urllib.request.urlopen(url).read().decode("utf-8")
 		page = json.loads(page)
 		each_ball = page["comms"][0]["ball"][0]
 
-		current_match = page["other_scores"]["international"][0]
-		team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["wickets"] + ", " +page["live"]["innings"]["overs"]
-		self.commentary = current_match["team1_name"] + "(" + current_match["team1_desc"]+ " )" +  " Vs " + current_match["team2_name"] + "( " + str(team2_score) + " )" + "\n"
+		current_matches = page["other_scores"]["international"]
+		for cm in current_matches:
+			if cm["object_id"] == self.match_no:
+				current_match = cm
+
+		team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["wickets"] + ", " + page["live"]["innings"]["overs"]
+		self.commentary = current_match["team1_name"] + "(" + current_match["team1_desc"]+ ", Overs : " + page["live"]["innings"]["overs"] +" )" +  " Vs " + current_match["team2_name"] + "( " + current_match["team2_desc"]+ " )" + "\n"
 
 		players = page["centre"]["batting"]
 		player1 = players[0]
