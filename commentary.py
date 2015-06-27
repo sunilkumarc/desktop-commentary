@@ -35,31 +35,35 @@ class Score(QtGui.QMainWindow):
 
 	def get_commentary(self):
 		# url = "http://www.espncricinfo.com/netstorage/" + self.match_no + ".json?xhr=1"
-		url = "http://www.espncricinfo.com/ci/engine/match/" + self.match_no + ".json"
-		page = urllib.request.urlopen(url).read().decode("utf-8")
-		page = json.loads(page)
-		each_ball = page["comms"][0]["ball"][0]
+		try:
+			url = "http://www.espncricinfo.com/ci/engine/match/" + self.match_no + ".json"
+			page = urllib.request.urlopen(url).read().decode("utf-8")
+			page = json.loads(page)
+			each_ball = page["comms"][0]["ball"][0]
 
-		current_matches = page["other_scores"]["international"]
-		for cm in current_matches:
-			if cm["object_id"] == self.match_no:
-				current_match = cm
+			current_matches = page["other_scores"]["international"]
+			for cm in current_matches:
+				if cm["object_id"] == self.match_no:
+					current_match = cm
 
-		team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["wickets"] + ", " + page["live"]["innings"]["overs"]
-		self.commentary = current_match["team1_name"] + "(" + current_match["team1_desc"]+ ", Overs : " + page["live"]["innings"]["overs"] +" )" +  " Vs " + current_match["team2_name"] + "( " + current_match["team2_desc"]+ " )" + "\n"
+			team2_score = page["live"]["innings"]["runs"] + "/"+ page["live"]["innings"]["wickets"] + ", " + page["live"]["innings"]["overs"]
+			self.commentary = current_match["team1_name"] + "(" + current_match["team1_desc"]+ ", Overs : " + page["live"]["innings"]["overs"] +" )" +  " Vs " + current_match["team2_name"] + "( " + current_match["team2_desc"]+ " )" + "\n"
 
-		players = page["centre"]["batting"]
-		player1 = players[0]
-		player2 = players[1]
+			players = page["centre"]["batting"]
+			player1 = players[0]
+			player2 = players[1]
 
-		self.commentary += ''.join((player1["known_as"], " - ", player1["runs"],'(', player1["balls_faced"] ,')')) + "\n"
-		self.commentary += ''.join((player2["known_as"], " - ", player2["runs"],'(', player2["balls_faced"] ,')')) + "\n\n"
-		temp = ''.join((each_ball["overs_actual"], " : ", each_ball['players'],',',each_ball['event'], ',', each_ball["text"]))
-		temp = '\n'.join(textwrap.wrap(temp, 64))
-		self.commentary += temp
+			self.commentary += ''.join((player1["known_as"], " - ", player1["runs"],'(', player1["balls_faced"] ,')')) + "\n"
+			self.commentary += ''.join((player2["known_as"], " - ", player2["runs"],'(', player2["balls_faced"] ,')')) + "\n\n"
+			temp = ''.join((each_ball["overs_actual"], " : ", each_ball['players'],',',each_ball['event'], ',', each_ball["text"]))
+			temp = '\n'.join(textwrap.wrap(temp, 64))
+			self.commentary += temp
 
-		os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
-		threading.Timer(30, self.get_commentary).start()
+			os.system("/opt/desktop-commentary/./script.sh" + " " + "\"" + self.commentary + "\"")
+			threading.Timer(30, self.get_commentary).start()
+		except KeyError as e:
+			os.system("/opt/desktop-commentary/./error.sh" + " " + "\"" + \
+			"Something went wrong. Currently the application supports only ongoing international matches :(" + "\"")
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
